@@ -14,7 +14,7 @@ const MyPlan = ({plans}) => {
   };
 {/* gestion du login  */}
   const [isLoggedIn, setIsLoggedIn] = useState(false); 
-  const handleLogin = (status) => { setIsLoggedIn(status); };
+  const handleLogin = (status) => { setIsLoggedIn(status); }; 
 
   return (
     <div className="container mx-auto p-4">

@@ -15,12 +15,15 @@ import MyRegister from './components/MyRegister';
 import MyLogin from './components/MyLogin';
 import NoMatch from './components/NoMatch';
 import MovieDetails from './components/MovieDetails';
+import FenetreModal from './components/FenetreModal';
+
+
 
 const App = () => {
   const [movies, setMovies] = useState([]);
   const [favourites, setFavourites] = useState([]);
   const [searchValue, setSearchValue] = useState('');
-  const navItems = [
+/*   const navItems = [
     { path: '/', label: 'Home' },
     { path: '/MovieList', label: 'Movies' },
     { path: '/Contact', label: 'Contact' },
@@ -28,6 +31,39 @@ const App = () => {
 	{ path: '/Register', label: 'Register'},
 	{ path: '/Login', label: 'Login'}
   ];
+
+  je modifie navItems en le passant en dynamique pour interagir dessus :
+ */  
+  const [navItems, setNavItems] = useState([
+    { path: '/', label: 'Home' },
+    { path: '/MovieList', label: 'Movies' },
+    { path: '/Contact', label: 'Contact' },
+    { path: '/About', label: 'About' },
+	{ path: '/Register', label: 'Register'},
+	{ path: '/Login', label: 'Login'},
+  { path: '/MyPlan', label: 'MyPlan'}
+
+  ]);
+
+  // je fais une copie de navITem pour agir sur ses path
+
+  const navItemsCopy = [...navItems];
+
+
+
+/* je cree le comportement et ligne 132
+ */  
+/* const handleClickMovie = () => {
+    alert("handleClickMovie");
+    console.log("handleClickMovie");
+  }
+ */
+
+
+
+
+
+
   const plans = [
 	{
 	  name: 'Basic',
@@ -50,10 +86,15 @@ const App = () => {
   const handleSelectPlan = (planName) => { setSelectedPlan(planName); };
   
   const [isLoggedIn, setIsLoggedIn] = useState(false); 
-  const handleLogin = (status) => { setIsLoggedIn(status); };
+  const handleLogin = (status) => { setIsLoggedIn(status); console.log(`log au noveau de la ligne 78 : ${isLoggedIn}`);};
+
+
+  //const apiurl = process.env.REACT_APP_API_URL;
+  const apikey = process.env.REACT_APP_API_KEY;
 
   const getMovieRequest = async (searchValue) => {
-    const url = {/* votre url omdb ici*/};
+    const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=${apikey}`; /* votre url omdb ici*/
+    // si tout mis dans le env alors faire const url = `{apiurl}?s=${searchValue}&apikey=${apikey}`;
     const response = await fetch(url);
     const responseJson = await response.json();
 
@@ -104,9 +145,31 @@ const App = () => {
     return array;
   };
 
+//const essai = console.log(`afficher le log : ${isLoggedIn}`);
+
+
+// je cree la fenetre modale
+
+const [showModal, setShowModal] = useState(false);
+
+const toggleModal = () => {
+  setShowModal(!showModal);
+};
+
+
   return (
-    <Router> <div className='container mx-auto p-4 movie-app'> 
-		<NavBar brandName="MyNetflop" navItems={navItems} searchValue={searchValue} setSearchValue={setSearchValue} /> 
+    <Router>
+ {/*  va avec le modal */}
+  <div className="App">
+    <button onClick={toggleModal}>Afficher la modale</button>
+    <FenetreModal show={showModal} onClose={toggleModal} />
+  </div>
+  {/* fin de va avec le modal */}
+      {console.log("test")}
+      {console.log("esdsf")}
+      {console.log(`afficher le log ligne 143 de app : ${isLoggedIn}`)}
+       <div className='container mx-auto p-4 movie-app'> 
+		<NavBar brandName="MyNetflop" navItemsCopy={navItemsCopy} searchValue={searchValue} setSearchValue={setSearchValue} isLoggedIn={isLoggedIn} setNavItems={setNavItems}/> 
 			<Suspense fallback={<div className="container">Loading...</div>}> 
 			<Routes> 
 				<Route path="/" element={<Home plans={plans} onSelectPlan={handleSelectPlan}/>} /> 

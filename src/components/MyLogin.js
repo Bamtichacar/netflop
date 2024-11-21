@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import MyForm from './MyForm';
 
+
+
 const MyLogin = ({ onLogin }) => {
   const fields = [
     { name: 'email', label: 'Email', type: 'email', placeholder: 'Entrer votre email' },
@@ -19,8 +21,8 @@ const MyLogin = ({ onLogin }) => {
   };
 
   return (
-    <div class="bg-gray-900 py-16">
-    <div class="container mx-auto px-4"></div>
+    <div className="bg-gray-900 py-16">
+    <div className="container mx-auto px-4"></div>
     <div className="container mx-auto p-4">
       <h1 className="text-2xl text-white font-bold mb-4">Se connecter</h1>
       <MyForm fields={fields} onSubmit={handleLogin} />

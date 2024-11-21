@@ -46,8 +46,8 @@ const MovieList = (props) => {
 	 return ( 
 		<>
   <div className="overflow-x-auto">
-  <div class="bg-gray-900 py-16">
-  <div class="container mx-auto px-4">
+  <div className="bg-gray-900 py-16">
+  <div className="container mx-auto px-4">
   <div className="overflow-x-auto whitespace-nowrap">
     {props.movies.map((movie, index) => (
       <div key={movie.imdbID} className="inline-block bg-gray-400 p-4 rounded-lg m-2">
